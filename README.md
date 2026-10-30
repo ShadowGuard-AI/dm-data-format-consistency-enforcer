@@ -1,3 +1,5 @@
+![Banner](banner.png)
+
 # dm-data-format-consistency-enforcer
 Ensures data within a column or field adheres to a consistent format (e.g., phone numbers, zip codes) by standardizing the format according to a defined pattern, even if the underlying data is masked. - Focused on Tools designed to generate or mask sensitive data with realistic-looking but meaningless values
 
