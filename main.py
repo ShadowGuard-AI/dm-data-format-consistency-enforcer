@@ -1,6 +1,5 @@
 import argparse
 import logging
-import re
 import sys
 from faker import Faker
 
@@ -54,7 +53,10 @@ class DataFormatEnforcer:
             str: The formatted data.  Returns None if formatting fails.
         """
         try:
-            # Replace existing data with a new, formatted value. No need to format the existing data.
+            # The input value is discarded on purpose: this masks by
+            # substitution, generating a fresh value that carries the right
+            # format, rather than reformatting the original value, which
+            # would keep the sensitive content and only change its shape.
             formatted_data = self.formatter()
             return formatted_data
         except Exception as e:
