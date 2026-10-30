@@ -11,7 +11,7 @@ Ensures data within a column or field adheres to a consistent format (e.g., phon
 
 ## Parameters
 - `-h`: Show help message and exit
-- `--locale`: No description provided
+- `--locale`: The locale to use (e.g., en_US, de_DE). Default is en_US.
 - `--count`: The number of formatted values to generate when no input data is provided. Default is 1.
 
 ## License
