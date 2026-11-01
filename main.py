@@ -61,6 +61,11 @@ class DataFormatEnforcer:
             if len(digits) == 7:
                 return f"{digits[:3]}-{digits[3:]}"
             if len(digits) > 7:
+                # Any other length over 7 digits is grouped in threes
+                # with dashes. That shape is invented here rather than
+                # taken from a numbering plan, so an 8 or 9 digit
+                # number comes back in a format no phone system uses,
+                # but with its digits intact and in order.
                 prefix = "+" if text.startswith('+') else ""
                 groups = [digits[i:i + 3] for i in range(0, len(digits), 3)]
                 return prefix + "-".join(groups)
@@ -73,6 +78,10 @@ class DataFormatEnforcer:
                 return f"{cleaned[:5]}-{cleaned[5:]}"
             return cleaned
         elif self.format_type == 'email':
+            # An address that matches is returned exactly as given, so
+            # for email the enforcement is only a shape test: nothing
+            # is normalised, and an address that fails the test is not
+            # repaired but replaced by a generated one in the caller.
             if re.match(r"^[^@\s]+@[^@\s]+\.[^@\s]+$", text):
                 return text
             return None
@@ -162,6 +171,8 @@ def main():
 
         if args.input_data:
             # Enforce format on the provided input data
+            # --count plays no part on this branch: one value in, one
+            # value out, however many were asked for.
             formatted_data = enforcer.enforce_format(args.input_data)
             if formatted_data:
                 print(formatted_data)
