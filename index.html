@@ -1,166 +1,66 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Dm Data Format Consistency Enforcer: what it is, how it runs, where it stops</title>
-<meta name="description" content="Dm Data Format Consistency Enforcer is one of my projects. The README in the repo is short, so this page sticks to what the files themselves show.">
-<style>
-:root {
-  --bg: #e8dec4; --panel: #f4ecd6; --ink: #183636;
-  --mut: #ffffff;
-  --acc: #147a72; --acc2: #c65434;
-  --line: #f4ecd6;
-}
-* { box-sizing: border-box; }
-body { margin: 0; background: var(--bg); color: var(--ink);
-  font-family: ' Gill Sans', 'Segoe UI', sans-serif; line-height: 1.55; }
-code, pre, .mono { font-family: 'SF Mono', monospace; }
-a { color: var(--acc2); }
-.hero { padding: 3rem 6vw 1rem; }
-.hero img.banner { width: 100%; height: auto; border: 1px solid var(--line);
-  border-radius: 10px; }
-.logo { width: 92px; height: 92px; border-radius: 18px;
-  border: 1px solid var(--line); }
-h1 { font-size: 2.4rem; margin: 0.4em 0 0.1em; }
-h2 { border-bottom: 2px solid var(--acc); padding-bottom: 0.2em;
-  margin-top: 2em; }
-.lede { font-size: 1.15rem; max-width: 62ch; }
-main { padding: 0 6vw 3rem; max-width: 1180px; margin: 0 auto; }
-.grid { display: grid; gap: 1rem;
-  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); }
-.card { background: var(--panel); border: 1px solid var(--line);
-  border-radius: 12px; padding: 1rem 1.2rem; }
-.card.pop { animation: rise 0.7s ease both; }
-@keyframes rise { from { opacity: 0; transform: translateY(14px); }
-  to { opacity: 1; transform: none; } }
-pre.code { background: #101014; color: #e8e6df; padding: 1rem 1.2rem;
-  border-radius: 12px; overflow-x: auto; font-size: 0.86rem;
-  border-left: 5px solid var(--acc); }
-table { border-collapse: collapse; width: 100%; }
-td, th { border-bottom: 1px solid var(--line); padding: 0.45rem 0.6rem;
-  text-align: left; }
-.shots { display: grid; gap: 1rem;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
-.shots img { width: 100%; height: auto; border: 1px solid var(--line);
-  border-radius: 10px; background: #f4f1e8; }
-footer { padding: 2rem 6vw; border-top: 1px solid var(--line);
-  color: var(--mut); }
-.rail { display: flex; gap: 1.2rem; align-items: flex-start; }
-.rail nav { position: sticky; top: 1rem; min-width: 180px; }
-@media (max-width: 760px) { .rail { flex-direction: column; }
-  .rail nav { position: static; } }
-@media (prefers-reduced-motion: reduce) {
-  .card.pop { animation: none; } * { scroll-behavior: auto; } }
-</style>
-</head>
-<body class="layout-rail">
-<!-- This page exists for dm-data-format-consistency-enforcer alone: the layout (sidebar-rail),
-     the colors, and the type were picked for this project, not
-     shared with the other project pages. The code block below is
-     copied from the file it names, line for line. If it looks
-     plain, that is because the project is plain, and I would
-     rather the page match the project than dress it up. The one
-     thing I will not do here is oversell: what this project does
-     not do is stated on the page, not hidden from it. -->
-<header class="hero">
-  <img class="logo" src="assets/logo.png" alt="Dm Data Format Consistency Enforcer logo">
-  <img class="banner" src="assets/banner.png" alt="">
-  <h1>Dm Data Format Consistency Enforcer</h1>
-  <p class="mono"><a href="https://github.com/ShadowGuard-AI/dm-data-format-consistency-enforcer">github.com/ShadowGuard-AI/dm-data-format-consistency-enforcer</a></p>
-</header>
+<!doctype html><html lang="en-GB"><head><meta charset="utf-8"><title>dm-data-format-consistency-enforcer: The Little Free Library Carpenter</title>
+<style>@font-face{font-family:Disp;src:url("fonts/Butcherman.ttf")}@font-face{font-family:Text;src:url("fonts/Barlow.ttf")}
+body{background:#f2e8ca;font-family:Text,sans-serif;color:#2a2118;margin:0}main{max-width:920px;margin:0 auto;padding:28px}
+h1,h2,h3{font-family:Disp,serif;color:#3e6e48}section{background:#f6efdb;padding:18px 22px;margin:16px 0;border-top:3px solid #7a5434;position:relative}
+.num{color:#c6a43e;font-family:Disp,serif}img{max-width:100%}
+button{background:#f6efdb;color:#3e6e48;border:2px solid #3e6e48;padding:14px 20px 10px;margin:4px;font-family:Disp,serif;clip-path:polygon(0 22%, 50% 0, 100% 22%, 100% 100%, 0 100%)}
+button:hover{color:#2c5236}button:active{transform:translateY(2px)}button:focus{outline:3px double #c6a43e}
+a::before{content:"label ";background:#f2e8ca;border:1px solid #7a5434;padding:1px 6px;margin-right:6px;font-size:12px}a:hover::before{background:#c6a43e}
+.label{display:inline-block;background:#f2e8ca;border:1px solid #3e6e48;padding:2px 8px;font-size:13px}
+.stamp{position:absolute;top:10px;right:12px;width:26px;height:26px;border:2px solid #b03a30;border-radius:50%;opacity:.75}
+pre{white-space:pre-wrap;font-family:Text,sans-serif;background:#efe6cc;padding:14px}code{font-family:Text,sans-serif}</style></head><body><main>
+<img src="intro-banner.png" alt="Introduction banner: the little free library on its post, door shut, pencil and folded rule on the step, no name anywhere">
+<h1>dm-data-format-consistency-enforcer: The Little Free Library Carpenter</h1>
+<p>dm-data-format-consistency-enforcer: The Little Free Library Carpenter names itself in that form throughout this page. The page is built as a set of shelves inside one tall case. The ground is dust cream, shelf panels are dust cream warmed a step, headings are in the embed face in library green, body text is in the text face in dark brown black, leather rules divide the shelves, and gilt is saved for shelf numbers, the current marker, and hinge points on the case doors.</p>
+<img src="logo.png" alt="Logo: the little free library alone, front on, with page blocks behind its glass door"><img src="banner.png" alt="Wordmark banner: the book box at evening with the name painted on its side panel">
+<img src="scene.svg" alt="Animated scene in three bands">
+<div><button type="button">Reformat to the Named Pattern</button></div>
+<p><span class="label">Format Kind</span> <span class="label">Value to Reformat, Optional</span></p>
+<h3>Five Kinds, One Shape Each</h3><h3>Swapped, Not Bent</h3><h3>Nothing Supplied, Values Made</h3>
+<section><h2><span class="num">Shelf 1.</span> The job in one breath</h2><p>Give this program a value and a format kind, and it hands the value back wearing the one shape that kind is supposed to wear.</p></section>
+<section><h2><span class="num">Shelf 2.</span> Five kinds, one shape each</h2>
+<p>Phone: the supplied digits are kept and regrouped. A ten digit number takes a bracketed area form, and an eleven digit number beginning with 1 takes an international prefix form. The pattern drawing uses letter placeholders only: (AAA) BBB-CCCC, with a +1 prefix in the eleven digit case.</p>
+<p>Zip code: the supplied letters and digits are kept. A nine digit code takes a split form with a dash before its last four digits. The pattern drawing lives in the record block below.</p>
+<p>Email: a value that is an email address passes through as it arrived, untouched.</p>
+<p>Social security number: nine supplied digits are kept and printed in three groups. The pattern drawing uses letter placeholders only: AAA-BB-CCCC.</p>
+<p>Credit card number: between twelve and nineteen supplied digits are kept and regrouped in fours with dashes between the groups.</p>
+<p>No telephone number, postal code, address, or card digits belonging to anyone appear on this plate or anywhere on this site. Pattern drawings use letter and digit placeholders only.</p></section>
+<section><h2><span class="num">Shelf 3.</span> Swapped, not bent</h2><div class="stamp"></div><p>A value of the wrong kind for its named format is not bent into shape. It is replaced by a made value in that format, and the run logs that a substitute came back. The given illustrations are text that is not an email address offered under the email format, and a social security number carrying other than nine digits. Beside this, at the same size, the empty handed case: supply nothing, and the program makes values in the named format, as many as the count control asks for.</p></section>
+<section><h2><span class="num">Shelf 4.</span> The workshop door: install, corrected</h2><p><code>git clone https://github.com/ShadowGuard-AI/dm-data-format-consistency-enforcer</code></p><p>Admission: this site corrected that line. The organisation appears here in its hyphenated spelling, ShadowGuard-AI. The README as fetched spells the organisation without its hyphen in this line, and that fault is preserved in the record block below and counted in the identity tally. The correction is made here in daylight and labelled, rather than planed quietly into the historical copy.</p></section>
+<section><h2><span class="num">Shelf 5.</span> The invocation skeleton on the bench</h2><p><code>./dm-data-format-consistency-enforcer [params]</code></p><p>Program call first. Then a placeholder standing where the format kind belongs, a placeholder standing where the optional value belongs, and room for the two options after them. The README demonstrates no invocation beyond that skeleton. Personal material is barred from this plate and from the entire site.</p></section>
+<section><h2><span class="num">Shelf 6.</span> Inventory of the controls</h2><p>Taken in README order, defaults pinned to the items that have them. Help flag: -h, show help message and exit. Format kind: format_type, one of phone_number, zip_code, email, ssn, credit_card_number. Input value: input_data, the value to reformat, optional. Locale: --locale, the locale to use, illustrated by the codes en_US and de_DE displayed as codes and nothing more, default en_US. Count: --count, the number of formatted values to generate when no input data is provided, default 1.</p></section>
+<section><h2><span class="num">Shelf 7.</span> Rights, and the case shut</h2><p>In the record block underneath, readers can inspect the README rights line exactly as fetched: Copyright (c) ShadowGuardAI, with the organisation in its unhyphenated form as printed. Alongside that inspection copy, the separate document fact in miniature: the LICENSE file is built to MIT terms, and its ownership line runs with a public pen name first, a bracketed variant joining a given name to a single initial second, and the account handle last. That construction is described here, never transcribed, and the single initial is not opened.</p></section>
+<section><h2>The preserved README record</h2><pre>![Banner](banner.png)
 
-<main>
-  <section class="rail">
-    <nav aria-label="on this page">
-      <p class="mono"><a href="#run">Run it</a><br>
-      <a href="#files">The files</a><br>
-      <a href="#sheets">The sheets</a><br>
-      <a href="https://github.com/ShadowGuard-AI/dm-data-format-consistency-enforcer">The repo</a></p>
-    </nav>
-    <div>
-      <p class="lede">Dm Data Format Consistency Enforcer is one of my projects. The README in the repo is short, so this page sticks to what the files themselves show.</p>
-      <div class="grid">
-        <div class="card pop"><h3>What it is</h3>
-          <p>Dm Data Format Consistency Enforcer: 5 files, 152 counted
-          lines across Python 133, Markdown 18, Text 1. One job, done in the
-          open, in files you can read.</p></div>
-        <div class="card pop"><h3>The biggest piece</h3>
-          <p><code>main.py</code> carries the most
-          lines. If the project grows, that file is where the growth
-          lands first, for better or worse.</p></div>
-        <div class="card pop"><h3>The honest gap</h3>
-          <p>No test files yet. That is the honest gap, and the roadmap in the visuals folder says what the first one should cover.</p></div>
-      </div>
-      <section id="run">
-        <h2>Run it</h2>
-        <p>The repo README has the exact commands for this one. The
-        shape is the shape for most of my projects: clone it, read the
-        top file first so you know what will happen, then run it on
-        something you do not mind breaking.</p>
-        <p class="mono">$ git clone https://github.com/ShadowGuard-AI/dm-data-format-consistency-enforcer.git<br>$ cd dm-data-format-consistency-enforcer</p>
-      </section>
-      
-  <section aria-label="real code">
-    <h2>The code, as it sits in the repo</h2>
-    <p>From <code>main.py</code>, line 7 on. I did
-    not tidy it for the page. What you see is what the file has.</p>
-    <pre class="code"><code>logging.basicConfig(level=logging.INFO, format=&#x27;%(asctime)s - %(levelname)s - %(message)s&#x27;)
+# dm-data-format-consistency-enforcer
+Ensures data within a column or field adheres to a consistent format (e.g., phone numbers, zip codes) by standardizing the format of the supplied value according to a defined pattern. - Focused on Tools designed to generate or mask sensitive data with realistic-looking but meaningless values
 
-class DataFormatEnforcer:
-    &quot;&quot;&quot;
-    Enforces data format consistency within a column or field,
-    even if the underlying data is masked.
-    &quot;&quot;&quot;
+## What happens to a supplied value
 
-    def __init__(self, format_type, locale=&#x27;en_US&#x27;):
-        &quot;&quot;&quot;
-        Initializes the DataFormatEnforcer.
+When you supply a value, the tool reformats that value and keeps its content where the format allows it:
 
-        Args:
-            format_type (str): The type of format to enforce (e.g., &#x27;phone_number&#x27;, &#x27;zip_code&#x27;).
-            locale (str): The locale to use for Faker (e.g., &#x27;en_US&#x27;, &#x27;de_DE&#x27;).
-        &quot;&quot;&quot;
-        self.format_type = format_type
-        self.fake = Faker(locale)
-        self.formatter = self._get_formatter()  # Determines which function to use for formatting
+- `phone_number`: the supplied digits are kept and regrouped. A 10 digit number prints as `(AAA) BBB-CCCC`, and an 11 digit number starting with 1 prints with a `+1` prefix.
+- `zip_code`: the supplied letters and digits are kept. A 9 digit code prints as `12345-6789`.
+- `email`: a supplied value that is an email address is carried through unchanged.
+- `ssn`: the supplied 9 digits are kept and printed as `AAA-BB-CCCC`.
+- `credit_card_number`: the supplied digits (12 to 19 of them) are kept and regrouped in fours, separated by dashes.
 
-    def _get_formatter(self):
-        &quot;&quot;&quot;</code></pre>
-  </section>
-      <section id="files">
-        <h2>The files that matter</h2>
-        <table><tr><th>File</th><th>Lines</th></tr>
-        <tr><td><code>main.py</code></td><td>133</td></tr>
-        <tr><td><code>README.md</code></td><td>18</td></tr>
-        <tr><td><code>requirements.txt</code></td><td>1</td></tr>
-        <tr><td><code>banner.png</code></td><td>0</td></tr>
-        <tr><td><code>logo.png</code></td><td>0</td></tr>
-        </table>
-        <p>Names doing the work: <span class="mono">DataFormatEnforcer, setup_argparse, main, __init__, _get_formatter, enforce_format</span>.</p>
-      </section>
-      <section id="sheets">
-        <h2>Drawn by hand</h2>
-        <p>I sketch my projects on notebook paper so I have to
-        understand them well enough to draw them. The full set,
-        with the counts and how they were counted, is the
-        <a href="https://github.com/ShadowGuard-AI/dm-data-format-consistency-enforcer/tree/main/dm-data-format-consistency-enforcer-Visuals">dm-data-format-consistency-enforcer-Visuals</a>
-        folder in the repo. Nothing is drawn over the binder holes.
-        That is a rule, not a style.</p>
-        <div class="shots">
-          <img src="assets/architecture.png" alt="Hand drawn architecture sheet for Dm Data Format Consistency Enforcer">
-          <img src="assets/flowchart.png" alt="Hand drawn flowchart sheet for Dm Data Format Consistency Enforcer">
-          <img src="assets/product-map.png" alt="Hand drawn product map sheet for Dm Data Format Consistency Enforcer">
-        </div>
-      </section>
-    </div>
-  </section>
-</main>
-<footer>
-  <p>Dm Data Format Consistency Enforcer is one of my projects. This page was written
-  from the repo itself on 2026-10-30: the counts are the
-  repo's counts, the code is the repo's code, and the gaps are the
-  repo's gaps.</p>
-</footer>
-</body>
-</html>
+Substitution cases: a supplied value that does not match the kind of data the named format holds cannot be reformatted without inventing content. For example, text that is not an email address supplied under `email`, or an SSN with other than 9 digits, is replaced with a freshly generated value in the named format, and the run logs that a substitute was returned. When no value is supplied at all, the tool generates values in the named format, as many as `--count` asks for.
+
+## Install
+`git clone https://github.com/ShadowGuardAI/dm-data-format-consistency-enforcer`
+
+## Usage
+`./dm-data-format-consistency-enforcer [params]`
+
+## Parameters
+- `-h`: Show help message and exit
+- `format_type`: One of phone_number, zip_code, email, ssn, credit_card_number.
+- `input_data`: The value to reformat (optional). See the section above for which formats preserve its content and when a generated substitute is returned instead.
+- `--locale`: The locale to use (e.g., en_US, de_DE). Default is en_US.
+- `--count`: The number of formatted values to generate when no input data is provided. Default is 1.
+
+## License
+Copyright (c) ShadowGuardAI</pre>
+<p>A note from the bench after the record. The block above is left alone once it has been checked against the fetched README. Its clone line and its closing rights line both carry the hyphenless organisation spelling, and both stay that way inside the block. A visitor who wants the hyphenated spelling should look at shelf four, where the correction is made in daylight and labelled.</p></section>
+</main></body></html>
