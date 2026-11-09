@@ -38,12 +38,12 @@ Substitution cases: a supplied value that does not match the kind of data the na
 ![Minor separator](sep-light.svg)
 
 ## Install
-`git clone https://github.com/ShadowGuardAI/dm-data-format-consistency-enforcer`
+`git clone https://github.com/ShadowGuard-AI/dm-data-format-consistency-enforcer`
 
 ![Minor separator](sep-light.svg)
 
 ## Usage
-`./dm-data-format-consistency-enforcer [params]`
+`python3 main.py [format_type] [input_data] [options]`
 
 ![Minor separator](sep-light.svg)
 
@@ -57,7 +57,7 @@ Substitution cases: a supplied value that does not match the kind of data the na
 ![Minor separator](sep-light.svg)
 
 ## License
-Copyright (c) ShadowGuardAI
+This project is released under the MIT License. See the [LICENSE](LICENSE) file for details.
 
 ![Major separator](sep-heavy.svg)
 
